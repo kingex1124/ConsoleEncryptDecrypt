@@ -51,7 +51,7 @@ namespace ConsoleEncryptDecrypt
         /// <param name="Source">解密前字串</param>
         /// <param name="cryptoKey">解密金鑰</param>
         /// <returns>解密後字串</returns>
-        public static string AESDecryptBase64(string sourceStr, string cryptoKey)
+        public static string AESDecryptBase64(string base64String, string cryptoKey)
         {
             string decrypt = "";
             try
@@ -64,7 +64,7 @@ namespace ConsoleEncryptDecrypt
                 aes.Key = key;
                 aes.IV = iv;
 
-                byte[] dataByteArray = Convert.FromBase64String(sourceStr);
+                byte[] dataByteArray = Convert.FromBase64String(base64String);
                 using (MemoryStream ms = new MemoryStream())
                 {
                     using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write))

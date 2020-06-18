@@ -19,14 +19,14 @@ namespace ConsoleEncryptDecrypt
         /// <summary>
         /// 加密Key
         /// </summary>
-        private static string _dESCryptoKey;
+        private static string _cryptoKey;
 
         /// <summary>
         /// 建構子
         /// </summary>
         static DESEncryptHelper()
         {
-            _dESCryptoKey = "87654321";
+            _cryptoKey = "87654321";
         }
 
         public DESEncryptHelper()
@@ -36,31 +36,31 @@ namespace ConsoleEncryptDecrypt
         /// <summary>
         /// 加密
         /// </summary>
-        /// <param name="original"></param>
+        /// <param name="sourceStr"></param>
         /// <returns></returns>
-        public static string EncryptDES(string original)
+        public static string DESEncryptBase64(string sourceStr)
         {
-            return EncryptDES(original, _dESCryptoKey);
+            return DESEncryptBase64(sourceStr, _cryptoKey);
         }
 
         /// <summary>
         /// 加密
         /// </summary>
-        /// <param name="original"></param>
+        /// <param name="sourceStr"></param>
         /// <returns></returns>
-        public static string EncryptDES(string original, string dESCryptoKey)
+        public static string DESEncryptBase64(string sourceStr, string cryptoKey)
         {
             string base64String;
             try
             {
-                string DESCryptoKey = dESCryptoKey;
+                string dESCryptoKey = cryptoKey;
                 DESCryptoServiceProvider des = new DESCryptoServiceProvider()
                 {
                     Mode = CipherMode.ECB,
-                    Key = Encoding.ASCII.GetBytes(DESCryptoKey),
-                    IV = Encoding.ASCII.GetBytes(DESCryptoKey)
+                    Key = Encoding.ASCII.GetBytes(dESCryptoKey),
+                    IV = Encoding.ASCII.GetBytes(dESCryptoKey)
                 };
-                byte[] s = Encoding.ASCII.GetBytes(original);
+                byte[] s = Encoding.ASCII.GetBytes(sourceStr);
                 ICryptoTransform desencrypt = des.CreateEncryptor();
                 byte[] CryptBytes = desencrypt.TransformFinalBlock(s, 0, (int)s.Length);
                 base64String = Convert.ToBase64String(CryptBytes);
@@ -75,31 +75,31 @@ namespace ConsoleEncryptDecrypt
         /// <summary>
         /// 解密
         /// </summary>
-        /// <param name="Base64String"></param>
+        /// <param name="base64String"></param>
         /// <returns></returns>
-        public static string DecryptDES(string Base64String)
+        public static string DESDecryptBase64(string base64String)
         {
-            return DecryptDES(Base64String, _dESCryptoKey);
+            return DESDecryptBase64(base64String, _cryptoKey);
         }
 
         /// <summary>
         /// 解密
         /// </summary>
-        /// <param name="Base64String"></param>
+        /// <param name="base64String"></param>
         /// <returns></returns>
-        public static string DecryptDES(string Base64String, string dESCryptoKey)
+        public static string DESDecryptBase64(string base64String, string cryptoKey)
         {
             string result;
             try
             {
-                string DESCryptoKey = dESCryptoKey;
+                string dESCryptoKey = cryptoKey;
                 DESCryptoServiceProvider des = new DESCryptoServiceProvider()
                 {
                     Mode = CipherMode.ECB,
-                    Key = Encoding.ASCII.GetBytes(DESCryptoKey),
-                    IV = Encoding.ASCII.GetBytes(DESCryptoKey)
+                    Key = Encoding.ASCII.GetBytes(dESCryptoKey),
+                    IV = Encoding.ASCII.GetBytes(dESCryptoKey)
                 };
-                byte[] s = Convert.FromBase64CharArray(Base64String.ToCharArray(), 0, Base64String.Length);
+                byte[] s = Convert.FromBase64CharArray(base64String.ToCharArray(), 0, base64String.Length);
                 ICryptoTransform desencrypt = des.CreateDecryptor();
                 result = Encoding.ASCII.GetString(desencrypt.TransformFinalBlock(s, 0, (int)s.Length));
             }

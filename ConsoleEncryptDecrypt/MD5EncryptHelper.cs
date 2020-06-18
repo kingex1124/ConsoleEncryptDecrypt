@@ -26,11 +26,19 @@ namespace ConsoleEncryptDecrypt
         /// </summary> 
         /// <span  name="original" class="mceItemParam"></span>原始字串</param> 
         /// <returns></returns> 
-        public static string GetMD5(string original)
+        public static string GetMD5(string sourceStr)
         {
-            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-            byte[] b = md5.ComputeHash(Encoding.UTF8.GetBytes(original));
-            return BitConverter.ToString(b).Replace("-", string.Empty);
+            string result = string.Empty;
+            try
+            {
+                MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+                byte[] b = md5.ComputeHash(Encoding.UTF8.GetBytes(sourceStr));
+                result = BitConverter.ToString(b).Replace("-", string.Empty);
+            }
+            catch (Exception ex)
+            {
+            }
+            return result;
         }
     }
 }

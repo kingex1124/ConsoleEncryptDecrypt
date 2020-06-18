@@ -15,7 +15,7 @@ namespace ConsoleEncryptDecrypt
             string possword = "1qaz@WSX";
 
             // key不能太長，容易被破解
-            string resultA = DESEncryptHelper.EncryptDES(possword, key);
+            string resultA = DESEncryptHelper.DESEncryptBase64(possword, key);
 
             //用此較安全 key 可以比較長
             string resultB = AESEncryptHelper.AESEncryptBase64(possword, key);
@@ -37,7 +37,7 @@ namespace ConsoleEncryptDecrypt
 
             Console.ReadKey();
 
-            resultA = DESEncryptHelper.DecryptDES(resultA, key);
+            resultA = DESEncryptHelper.DESDecryptBase64(resultA, key);
             resultB = AESEncryptHelper.AESDecryptBase64(resultB, key);
             resultC = RSAEncryptHelper.Decrypt(resultC);
 

@@ -10,6 +10,27 @@ namespace ConsoleEncryptDecrypt
     {
         static void Main(string[] args)
         {
+            // Test 把 '我' 轉為 10進制 unicode  再轉為 16進制 unicode 再轉為 byte[] 再編碼為 '我'
+            string encodResult = EncodingHelper.BytesEncodToUnicodeString(EncodingHelper.HexStringToByteArr(EncodingHelper.DecToHexString(EncodingHelper.StringToDecUnicode('我'))));
+
+            byte[] byteArray = EncodingHelper.HexStringToByteArr(EncodingHelper.DecToHexString(EncodingHelper.StringToDecUnicode('我')));
+            
+            byte[] byteArray1 = Encoding.Unicode.GetBytes("我");
+
+            //將byte資料轉為 base64字串
+            string base64Data = Convert.ToBase64String(byteArray);
+
+            // 將 '我' 轉為二進位List 再轉回 "我" 字串
+            var binary = new List<List<int>>();
+
+            var btteArray2 =  ConvertBinaryHelper.ConvertTextToBinary((int)'我', 2);
+
+            binary.Add(btteArray2);
+
+            var binaryToTextResult = ConvertBinaryHelper.ConvertBinaryToText(binary);
+
+            var resultUrl = SHA256EncryptHelper.Encrypt(@"1");
+
             string key = "12345678";
 
             string possword = "1qaz@WSX";
@@ -49,5 +70,7 @@ namespace ConsoleEncryptDecrypt
 
             Console.ReadKey();
         }
+
+
     }
 }

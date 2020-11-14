@@ -44,11 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AESEncryptHelper.cs" />
+    <Compile Include="ConvertBinaryHelper.cs" />
     <Compile Include="DESEncryptHelper.cs" />
+    <Compile Include="EncodingHelper.cs" />
     <Compile Include="MD5EncryptHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RSAEncryptHelper.cs" />
+    <Compile Include="SHA256EncryptHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

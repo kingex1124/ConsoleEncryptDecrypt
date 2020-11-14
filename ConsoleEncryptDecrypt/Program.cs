@@ -14,8 +14,16 @@ namespace ConsoleEncryptDecrypt
             string encodResult = EncodingHelper.BytesEncodToUnicodeString(EncodingHelper.HexStringToByteArr(EncodingHelper.DecToHexString(EncodingHelper.StringToDecUnicode('我'))));
 
             byte[] byteArray = EncodingHelper.HexStringToByteArr(EncodingHelper.DecToHexString(EncodingHelper.StringToDecUnicode('我')));
-            
+
             byte[] byteArray1 = Encoding.Unicode.GetBytes("我");
+
+            byte[] byteArray2 = Encoding.Default.GetBytes("我");
+
+            // "我" 在BIG5 碼 = A7DA (此為16進制)
+            // 轉為 二進制為 10100111 11011010 切成兩段 分別如下方兩組 轉為十進制的數字
+            // byteArray3[0] = 167
+            // byteArray3[1] = 218
+            byte[] byteArray3 = Encoding.GetEncoding("Big5").GetBytes("我");
 
             //將byte資料轉為 base64字串
             string base64Data = Convert.ToBase64String(byteArray);
@@ -23,9 +31,9 @@ namespace ConsoleEncryptDecrypt
             // 將 '我' 轉為二進位List 再轉回 "我" 字串
             var binary = new List<List<int>>();
 
-            var btteArray2 =  ConvertBinaryHelper.ConvertTextToBinary((int)'我', 2);
+            var byteArray4 =  ConvertBinaryHelper.ConvertTextToBinary((int)'我', 2);
 
-            binary.Add(btteArray2);
+            binary.Add(byteArray4);
 
             var binaryToTextResult = ConvertBinaryHelper.ConvertBinaryToText(binary);
 

@@ -67,6 +67,18 @@ namespace ConsoleEncryptDecrypt
         }
 
         /// <summary>
+        /// 使用Default轉碼
+        /// 英文數字 為ASCII
+        /// 中文會變成 ANSI編碼 也就是Big5
+        /// </summary>
+        /// <param name="hexStr"></param>
+        /// <returns></returns>
+        public static byte[] StringToANSIByteArr(string hexStr)
+        {
+            return Encoding.Default.GetBytes(hexStr);
+        }
+
+        /// <summary>
         /// 把byte[] 編碼為 Unicode 字串
         /// </summary>
         /// <param name="byteData"></param>

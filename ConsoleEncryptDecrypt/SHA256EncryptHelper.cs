@@ -16,13 +16,20 @@ namespace ConsoleEncryptDecrypt
 
         public static string Encrypt(string sourceStr)
         {
-            SHA256CryptoServiceProvider sha256 = new SHA256CryptoServiceProvider();
-            
-            byte[] hashValue = sha256.ComputeHash(Encoding.UTF8.GetBytes(sourceStr));
+            string result = string.Empty;
+            try
+            {
+                SHA256CryptoServiceProvider sha256 = new SHA256CryptoServiceProvider();
 
-            string e = System.Text.Encoding.Default.GetString(hashValue);
-            //string test = SHA256EncryptHelper.ConvertBinaryToText();
-           return  Convert.ToBase64String(hashValue);
+                byte[] hashValue = sha256.ComputeHash(Encoding.UTF8.GetBytes(sourceStr));
+
+                result = Convert.ToBase64String(hashValue);
+            }
+            catch (Exception ex)
+            { 
+            }
+
+            return result;
         }
     }
 }

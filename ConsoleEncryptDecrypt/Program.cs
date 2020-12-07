@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -133,6 +134,18 @@ namespace ConsoleEncryptDecrypt
             Console.WriteLine("DecryptResultB: {0}", resultB);
 
             Console.WriteLine("DecryptResultC: {0}", resultC);
+
+
+            //測試檔案加密
+
+
+            var encryptFile = AESEncryptHelper.AESEncryptByte(File.ReadAllBytes(@"D:\Users\kevan\Desktop\1.OOP 的四個特性.mp4"), "123456789");
+
+            var decryptFile = AESEncryptHelper.AESDecryptByte(encryptFile, "123456789");
+            using (var fs = new FileStream(@"D:\Users\kevan\Desktop\OK\1.OOP 的四個特性.mp4", FileMode.Create, FileAccess.Write))
+            {
+                fs.Write(decryptFile, 0, decryptFile.Length);
+            }
 
             Console.ReadKey();
         }

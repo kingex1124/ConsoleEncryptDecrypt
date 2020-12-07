@@ -81,5 +81,75 @@ namespace ConsoleEncryptDecrypt
             }
             return decrypt;
         }
+
+        /// <summary>
+        /// 加密byte檔案
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="cryptoKey"></param>
+        /// <returns></returns>
+        public static byte[] AESEncryptByte(byte[] source, string cryptoKey)
+        {
+            byte[] encrypt = new byte [0];
+            try
+            {
+                AesCryptoServiceProvider aes = new AesCryptoServiceProvider();
+                MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+                SHA256CryptoServiceProvider sha256 = new SHA256CryptoServiceProvider();
+                byte[] key = sha256.ComputeHash(Encoding.UTF8.GetBytes(cryptoKey));
+                byte[] iv = md5.ComputeHash(Encoding.UTF8.GetBytes(cryptoKey));
+                aes.Key = key;
+                aes.IV = iv;
+
+                using (MemoryStream ms = new MemoryStream())
+                using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                {
+                    cs.Write(source, 0, source.Length);
+                    cs.FlushFinalBlock();
+                    encrypt = ms.ToArray();
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            return encrypt;
+        }
+
+        /// <summary>
+        /// 解密byte檔案
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="cryptoKey"></param>
+        /// <returns></returns>
+        public static byte[] AESDecryptByte(byte[] source, string cryptoKey)
+        {
+            byte[] decrypt = new byte[0];
+            try
+            {
+                AesCryptoServiceProvider aes = new AesCryptoServiceProvider();
+                MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+                SHA256CryptoServiceProvider sha256 = new SHA256CryptoServiceProvider();
+                byte[] key = sha256.ComputeHash(Encoding.UTF8.GetBytes(cryptoKey));
+                byte[] iv = md5.ComputeHash(Encoding.UTF8.GetBytes(cryptoKey));
+                aes.Key = key;
+                aes.IV = iv;
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(source, 0, source.Length);
+                        cs.FlushFinalBlock();
+                        decrypt = ms.ToArray();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            return decrypt;
+        }
     }
 }
